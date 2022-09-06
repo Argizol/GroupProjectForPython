@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>46ce3e39-69ff-4eaf-a4a1-94296b49d6bf</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GroupProjectHW7_9.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GroupProjectHW7_9.py" />
+    <Compile Include="main.py" />
+    <Compile Include="FindCommands.py" />
+    <Compile Include="DeleteCommand.py" />
+    <Compile Include="EditCommand.py" />
+    <Compile Include="AddCommand.py" />
+    <Compile Include="ReadCommand.py" />
+    <Compile Include="ExitCommand.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Диаграма\" />
