@@ -1,12 +1,12 @@
 # указываем путь к файлу импорта
-import_path = 'd:\GroupProjectForPython\phonebook.csv'
-with open(import_path, 'r') as f:
+
+with open(r'phonebook.csv', 'r') as f:
     imported_phonebook = f.read().strip()
-data = {}
+
 for i in imported_phonebook.split('\n'):
     i = i.strip().split(',')
     data[i[0]] = i[1]
-print(f'The phonebook from {import_path} has been successfully imported.')
+
 
 # печать полученного словаря
 # print(data)
@@ -35,8 +35,7 @@ print(f'The phonebook from {import_path} has been successfully imported.')
 #     print(a, b, sep=', ')
 
 # экспортируем справочник в файл после работы с ним:
-export_path = 'd:\GroupProjectForPython\exported_phonebook.csv'
-with open(export_path, 'w') as f:
+with open(r'exported_phonebook.csv', 'w') as f:
     for x, y in data.items():
         f.write(f'{x}, {y}\n')
-print(f'The phonebook has been successfully imported to {export_path}.')
+

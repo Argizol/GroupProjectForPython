@@ -3,17 +3,18 @@ import DeleteCommand as Del
 import EditCommand as Edit
 import ExitCommand as Exit
 import FindCommands as Find
-import Logger as log
+import logger as log
 
 def Menu():
-    while True:
+    canWork = True
+    while canWork:
         try:
             command = input('Добро пожаловать в телефонный справочник.\n Введите команду: ')
             match command:
                 case 'Add':
                     name = input('Введите имя: ')
                     surname = input('Введите фамилию: ')
-                    phoneNumber = input('Введите номер телефона: ')
+                    phonenumber = input('Введите номер телефона: ')
                     Add.Add(name, surname, phonenumber)
                     print('Абонент сохранен в справочник.')
                     log.Add_logger(Add.Add) #тут не уверен в правильности написания, мб надо сделать сохранение data в переменную?
@@ -34,7 +35,7 @@ def Menu():
                     Find.FindBySurname(user)
                 case 'Exit':
                     print('Завершение работы приложения...')
-                    Exit.Exit()
+                    Exit.Exit(canWork)
                 case _:
                     print("Введены неправильные данные. Повторите ввод команды. ")
         except:
