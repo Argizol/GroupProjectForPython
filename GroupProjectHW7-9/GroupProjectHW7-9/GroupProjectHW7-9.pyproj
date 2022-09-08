@@ -28,7 +28,8 @@
     <Compile Include="AddCommand.py" />
     <Compile Include="ReadCommand.py" />
     <Compile Include="ExitCommand.py" />
-    <Compile Include="logger.py" />
+    <Compile Include="Logger.py" />
+    <Compile Include="UI.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Диаграма\" />
