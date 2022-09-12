@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddCommand.py" />
+    <Compile Include="Contacts.py" />
     <Compile Include="DeleteCommand.py" />
     <Compile Include="ExitCommand.py" />
     <Compile Include="FindCommands.py" />
@@ -31,7 +32,6 @@
     <Compile Include="UI.py" />
     <Compile Include="ImportFile.py" />
     <Compile Include="ExportFile.py" />
-    <Compile Include="Contacts.py" />
     <Compile Include="EditCommand.py" />
   </ItemGroup>
   <ItemGroup>
