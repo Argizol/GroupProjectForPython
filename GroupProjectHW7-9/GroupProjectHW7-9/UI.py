@@ -41,20 +41,20 @@ def Menu():
                     #т.к. мы все равно перед этим ищем пользователя?? Пока сделал так.
                     user = input('Кого Вы хотите удалить?')
                     if type(user) == int:
-                        user_pool = list(Find.FindByPhoneNumber(user))
+                        user_pool = list(Find.Find(user))
                         if len(user_pool)>1:
                             user_choice = input(int('Пользователя под каким номером Вы хотите удалить?'))
                             #Del.DeleteByPhoneNumber(user_pool[user_choice-1])
                         elif len(user_pool)==1:
-                            Del.DeleteByPhoneNumber(user)
+                            Del.Delete(user)
                     else:
-                        user_pool = list(Find.FindByPhoneNumber(user))
-                        Find.FindByName(user)
+                        user_pool = list(Find.Find(user))
+                        #Find.Find(user)
                         if len(user_pool)>1:
                             user_choice = input(int('Пользователя под каким номером Вы хотите удалить?'))
-                            Del.DeleteByName(user_pool[user_choice-1])
+                            Del.Delete(user_pool[user_choice-1])
                         elif len(user_pool)==1:
-                            Del.DeleteByName(user_pool)
+                            Del.Delete(user_pool)
 
                 case 'Edit':
                     user = input('Какой контакт Вы хотите изменить?')
@@ -79,7 +79,7 @@ def Menu():
                             123
                             #Нужно нарисовать команду Edit.
                         case 'Del':
-                            Del.DeleteByName(user_for_commands[1])
+                            Del.Delete(user_for_commands[1])
                         case 'Exit':
                             break #? хз как это будет тут работать, надо потестить и сделать выход в меню.
                         case _:
