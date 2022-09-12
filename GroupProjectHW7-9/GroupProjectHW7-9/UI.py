@@ -12,12 +12,12 @@ from Contacts import data
 def Menu():
     global data
     canWork = True
-    command_import = input('Добро пожаловать в телефонный справочник\n Хотите импортировать файл? Да/нет: ').lower()
+    command_import = input('Добро пожаловать в телефонный справочник\nХотите импортировать файл? Да/нет: ').lower()
     if command_import == 'да':
         data = Import.ImportFromFile()#надо прикрутить в метод указание пути, где лежит файл для импорта.
     while canWork:
         #try:
-            command = input('Введите команлу: "Add" - чтобы добавить новый контакт, "Del" - чтобы удалить контакт, "Find" - чтобы найти контакт,  "Exit" - чтобы выйти из приложения. ')
+            command = input('Введите команлу:\n"Add" - чтобы добавить новый контакт,\n"Del" - чтобы удалить контакт,\n"Find" - чтобы найти контакт,\n"Exit" - чтобы выйти из приложения.\n')
             match command:
                 case 'Add':
                     name = input('Введите имя: ')#реализовать метод проверки
@@ -67,11 +67,10 @@ def Menu():
                     user_pool = list(Find.Find(user))# проверка на ввод и вызов нужного метода
                     if len(user_pool)>1:
                         user_choice = int(input('Пользователя под каким номером Вы хотите выбрать?'))
-                        user_for_commands = user_pool[user_choice-1]
+                        user_for_commands = user_pool[user_choice-1].split(',')
                         print(user_pool[user_choice-1])
                     elif len(user_pool)==1:
-                        print(user_pool)
-                        user_for_commands = user_pool
+                        user_for_commands = user_pool[0].split(',')
                     else:
                         print('Пользователи не найдены. ')
                     command_for_edit = input('Введите дальнейшую команду:\nEdit - для изменения контакта\nDel - для удаления контакта\nExit - для выхода вглавное меню.\n')
@@ -80,7 +79,7 @@ def Menu():
                             123
                             #Нужно нарисовать команду Edit.
                         case 'Del':
-                            Del.DeleteByName(user_for_commands)
+                            Del.DeleteByName(user_for_commands[1])
                         case 'Exit':
                             break #? хз как это будет тут работать, надо потестить и сделать выход в меню.
                         case _:

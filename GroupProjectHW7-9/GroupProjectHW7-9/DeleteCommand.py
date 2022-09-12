@@ -1,9 +1,10 @@
 from Contacts import data
 import logger as Log
 
-def DeleteByName(name):
-     for j, k in data.items():
-        if j.__contains__(name):
+def DeleteByName(user_data):
+    global data
+    for j, k in data.items():
+        if k.__contains__(user_data):
             del data[j]
             Log.Del_logger(f'{j} {k}')
 
