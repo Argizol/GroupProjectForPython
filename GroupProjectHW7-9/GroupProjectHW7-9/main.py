@@ -1,2 +1,2 @@
-
-canWork = True
+import UI as Menu
+Menu.Menu()
