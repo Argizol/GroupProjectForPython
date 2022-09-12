@@ -29,9 +29,10 @@
     <Compile Include="Logger.py" />
     <Compile Include="ReadCommand.py" />
     <Compile Include="UI.py" />
-    <Compile Include="FileImport.py" />
+    <Compile Include="ImportFile.py" />
     <Compile Include="ExportFile.py" />
     <Compile Include="Contacts.py" />
+    <Compile Include="EditCommand.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Диаграма\" />
