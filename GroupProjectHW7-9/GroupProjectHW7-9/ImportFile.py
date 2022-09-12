@@ -1,7 +1,6 @@
 import os
 from Contacts import data
 
-
 def ImportFromFile():
     global data
     if os.path.exists(r'phonebook.csv'):        

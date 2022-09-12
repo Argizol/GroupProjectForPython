@@ -1,21 +1,11 @@
 from Contacts import data
-
-def FindByName(name, data):
-     count = 1
-     for j, k in data.items():
-        if j.__contains__(name):
-            print(count, j, k, sep=', ')
-            count+= 1;
-        else:
-            print('Пользователей с таким именем не существует.')
-
-def FindByPhoneNumber(phoneNum):
-     count = 1
-     for j, k in data.items():
-        if k.__contains__(phoneNum):
-            print(count, j, k, sep=', ')
-            count+= 1
-        else:
-            print('Пользователей с таким номером не существует.')
-
+def Find(user_data):
+    global data
+    list1 = []
+    for j, k in data.items():
+       if (user_data in j) or (user_data in k):
+            list1.append(f'{j}, {k}')
+    for idx, el in enumerate(list1):
+        print(idx+1, el)
+    return list1
 

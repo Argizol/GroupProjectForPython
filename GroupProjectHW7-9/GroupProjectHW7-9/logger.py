@@ -1,24 +1,21 @@
-import datetime as dt
+from datetime import datetime
 
 def Add_logger(data):
-    time = dt.now().strftime('%H:%M')
+    time = datetime.now().strftime('%H:%M')
     with open("log.csv", "a") as file:
-        file.write(f'{time} added {data}.')
-        file.write(' ')
+        file.write(f'{time} added {data}.\n')
     file.close()
 
 def Del_logger(data):
-    time = dt.now().strftime('%H:%M')
+    time = datetime.now().strftime('%H:%M')
     with open("log.csv", "a") as file:
-        file.write(f'{time} deleted {data}.')
-        file.write(' ')
+        file.write(f'{time} deleted {data}.\n')
     file.close()
 
 def Edit_logger(data):
-    time = dt.now().strftime('%H:%M')
+    time = datetime.now().strftime('%H:%M')
     with open("log.csv", "a") as file:
-        file.write(f'{time} edited {data}.')
-        file.write(' ')
+        file.write(f'{time} edited {data}.\n')
     file.close()
 
 
