@@ -41,43 +41,27 @@ def Menu():
                         print('Номер телефона может включать только цифры')
                 Add.Add(name, surname, phonenumber)  # Реализовать разбиение сплитом на список
                 print('Абонент сохранен в справочник.')
-                # def input_check(data):
-                # if data.isdigit():
-                #    print('isdigit')
-                # elif data.isalpha():
-                #    print('isalpha')
-                # else:
-                #    print('Not digit or alpha')
-                #
-
 
             case 'Read':
                 Read.ReadFhoneBook() if len(data) > 0 else print('The phonebook is empty.') # Проверка на пустой словарь
             case 'Del':
-                # Возможно стоит сделать только один метод на удаление, изменение и т.д.,
-                # т.к. мы все равно перед этим ищем пользователя?? Пока сделал так.
-                user = input('Кого Вы хотите удалить?')
-                if type(user) == int:
-                    user_pool = list(Find.Find(user))
-                    if len(user_pool) > 1:
-                        user_choice = input(int('Пользователя под каким номером Вы хотите удалить?'))
-                        # Del.DeleteByPhoneNumber(user_pool[user_choice-1])
-                    elif len(user_pool) == 1:
-                        Del.Delete(user)
+                user = input('Кого Вы хотите удалить? Введите ФИО или номер телефона')
+                user_pool = list(Find.Find(user))
+                if len(user_pool) > 1:
+                    user_choice = int(input('Пользователя под каким номером Вы хотите выбрать?'))
+                    user_for_commands = user_pool[user_choice - 1].split(',')
+                    print(user_pool[user_choice - 1])
+                    Del.Delete(user_for_commands[1])
+                elif len(user_pool) == 1:
+                    user_for_commands = user_pool[0].split(',')
+                    Del.Delete(user_for_commands[1])
                 else:
-                    user_pool = list(Find.Find(user))
-                    # Find.Find(user)
-                    if len(user_pool) > 1:
-                        user_choice = input(int('Пользователя под каким номером Вы хотите удалить?'))
-                        Del.Delete(user_pool[user_choice - 1])
-                    elif len(user_pool) == 1:
-                        Del.Delete(user_pool)
-
-            case 'Edit':
-                user = input('Какой контакт Вы хотите изменить?')
-                Edit.EditByName(user)
-                Edit.EditByPhoneNumber(user)
-                Edit.EditBySurname(user)
+                    print('Пользователи не найдены. ')              
+            #case 'Edit':
+            #    user = input('Какой контакт Вы хотите изменить?')
+            #    Edit.EditByName(user)
+            #    Edit.EditByPhoneNumber(user)
+            #    Edit.EditBySurname(user)
             case 'Find':
                 user = input('Какой контакт Вы хотите найти?')
 
@@ -93,9 +77,9 @@ def Menu():
                 command_for_edit = input(
                     'Введите дальнейшую команду:\nEdit - для изменения контакта\nDel - для удаления контакта\nExit - для выхода вглавное меню.\n')
                 match command_for_edit:
-                    case 'Edit':
-                        123
-                        # Нужно нарисовать команду Edit.
+                    #case 'Edit':
+                    #    123
+                    #    # Нужно нарисовать команду Edit.
                     case 'Del':
                         Del.Delete(user_for_commands[1])
                     case 'Exit':
