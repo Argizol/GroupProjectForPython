@@ -7,7 +7,7 @@
 ## :man_technologist: Команда: 
 - [Дмитрий](https://github.com/Argizol):  тимлид, основные команды
 - [Виктор](https://github.com/TheLi4e):  UI, Логирование
-- [Ксения](https://github.com/letusbeus):  Импорт/Экспорт
+- [Ксения](https://github.com/letusbeus):  Импорт/Экспорт, README.md
 - [Роман](https://github.com/AndarkRA):  Сведение всех классов в итоговый проект
 ## :hammer_and_wrench: Структура 
 - в процессе
