@@ -1,11 +1,12 @@
 from Contacts import data
-def Find(user_data):
-    global data
-    list1 = []
-    for j, k in data.items():
-       if (user_data in j) or (user_data in k):
-            list1.append(f'{j},{k}')
-    for idx, el in enumerate(list1):
-        print(idx+1, el)
-    return list1
 
+
+def find_contact(user_data):
+    global data
+    filtered_list = []
+    for name, phone in data.items():
+        if (user_data in name) or (user_data in phone):
+            filtered_list.append(f'{name}, {phone}')
+    for idx, el in enumerate(filtered_list):
+        print(idx + 1, el)
+    return filtered_list

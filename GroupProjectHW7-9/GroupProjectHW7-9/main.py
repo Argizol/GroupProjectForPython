@@ -1,2 +1,2 @@
-import UI as Menu
-Menu.Menu()
+import UI as UI
+UI.menu()

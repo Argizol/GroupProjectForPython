@@ -1,6 +1,6 @@
-def Exit(canWork):
-    canWork = False
-    return canWork
+def exit(can_work):
+    can_work = False
+    return can_work
 
 
 

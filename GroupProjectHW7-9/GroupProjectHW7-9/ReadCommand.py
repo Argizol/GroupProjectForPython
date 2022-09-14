@@ -1,9 +1,7 @@
 from Contacts import data
 
-def ReadFhoneBook():
+
+def read_phone_book():
     global data
-    for a, b in sorted(data.items()):
-        print(a, b, sep=', ')
-
-
-
+    for name, phone in sorted(data.items()):
+        print(name, phone, sep=', ')
