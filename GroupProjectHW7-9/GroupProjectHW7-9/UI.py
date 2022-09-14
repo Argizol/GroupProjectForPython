@@ -57,7 +57,7 @@ def menu():
                         Del.delete_contact(user_for_commands[1])
                         print(f'Запись абонента {user_for_commands[1]} удалена.')
                     elif len(user_pool) == 1:
-                        user_for_commands = user_pool.split(',')
+                        user_for_commands = user_pool[0].split(',')
                         Del.delete_contact(user_for_commands[1])
                         print(f'Запись абонента {user_for_commands[1]} удалена.')
                     else:
