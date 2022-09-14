@@ -76,16 +76,16 @@ def Menu():
                     print('Пользователи не найдены. ')
                 command_for_edit = input(
                     'Введите дальнейшую команду:\nEdit - для изменения контакта\nDel - для удаления контакта\nExit - для выхода вглавное меню.\n')
-                #match command_for_edit:
-                #    #case 'Edit':
-                #    #    123
-                #    #    # Нужно нарисовать команду Edit.
-                #    case 'Del':
-                #        Del.Delete(user_for_commands[1])
-                #    case 'Exit':
-                #        break  # ? хз как это будет тут работать, надо потестить и сделать выход в меню.
-                #    case _:
-                #        print("Введены неправильные данные. Повторите ввод команды. ")
+                match command_for_edit:
+                    #case 'Edit':
+                    #    123
+                    #    # Нужно нарисовать команду Edit.
+                    case 'Del':
+                        Del.Delete(user_for_commands[1])
+                    case 'Exit':
+                        break  # ? хз как это будет тут работать, надо потестить и сделать выход в меню.
+                    case _:
+                        print("Введены неправильные данные. Повторите ввод команды. ")
                 user_pool.clear()
             case 'Exit':
                 export = input('Хотите экспортировать файл телефонного справочника?\nДа/нет: ').lower()
