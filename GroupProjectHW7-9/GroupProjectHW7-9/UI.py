@@ -15,7 +15,7 @@ def menu():
     can_work = True
     command_import = input('Добро пожаловать в телефонный справочник\nХотите импортировать файл? Да/нет: ').lower()
     if command_import in ('да', 'lf', 'yes', 'y', 'д', 'l'):
-        data = Import.import_from_file()  # надо прикрутить в метод указание пути, где лежит файл для импорта.
+        data = Import.import_from_file()
     while can_work:
         try:
             command = input('Введите команду:'
