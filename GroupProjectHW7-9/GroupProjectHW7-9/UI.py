@@ -89,6 +89,7 @@ def menu():
                                     print('Вы ввели некорректное значение')
                             case 'Del':
                                 Del.delete_contact(user_for_commands[1])
+                                print(f'Запись абонента {user_for_commands[0]}, {user_for_commands[1]} удалена.')
                             case 'Exit':
                                 break  
                             case _:
