@@ -1,3 +1,5 @@
+from aifc import Error
+import logger as Log
 import AddCommand as Add
 import ReadCommand as Read
 import DeleteCommand as Del
@@ -22,6 +24,7 @@ def menu():
                             '\n"Add" - чтобы добавить новый контакт,'
                             '\n"Del" - чтобы удалить контакт,'
                             '\n"Find" - чтобы найти контакт,'
+                            '\n"Read" - чтобы вывести на экран весь справочник,'
                             '\n"Exit" - чтобы выйти из приложения.\n').capitalize()
             match command:
                 case 'Add':
@@ -54,7 +57,7 @@ def menu():
                         Del.delete_contact(user_for_commands[1])
                         print(f'Запись абонента {user_for_commands[1]} удалена.')
                     elif len(user_pool) == 1:
-                        user_for_commands = user_pool[0].split(',')
+                        user_for_commands = user_pool.split(',')
                         Del.delete_contact(user_for_commands[1])
                         print(f'Запись абонента {user_for_commands[1]} удалена.')
                     else:
@@ -100,5 +103,6 @@ def menu():
                     can_work = Exit.exit(can_work)
                 case _:
                     print("Введены неправильные данные. Повторите ввод команды. ")
-        except:
+        except Exception as error:
             print("Введены неправильные данные. Перезапуск приложения...")
+            Log.error_logger(error)
