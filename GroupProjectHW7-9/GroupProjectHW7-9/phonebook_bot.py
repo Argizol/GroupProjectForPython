@@ -81,8 +81,7 @@ def delete_contact(user_data):
             del data[name]
             Log.del_logger(f'{name} {phone}')
 def delete(message):
-    global data 
-    count = 0
+    global data
     if len(data) == 0:
         bot.send_message(message.from_user.id,f'Никого нет')
     for name, phone in data.copy().items():
@@ -90,6 +89,7 @@ def delete(message):
             del data[name]
             Log.del_logger(f'{name} {phone}')
             bot.send_message(message.from_user.id, f'Удален контакт: {name} {phone}')
+
 
 def find_contact_bot(message):
     global data 
