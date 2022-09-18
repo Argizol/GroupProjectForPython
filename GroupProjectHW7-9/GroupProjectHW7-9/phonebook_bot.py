@@ -44,7 +44,27 @@ def start(message):
 def bot_message(message):
     if message.chat.type == 'private':
         if message.text == 'Вывести справочник на экран':
-            ReadCommand.read_phone_book()
+            list1 = []
+            for i,j in data:
+               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                bot.send_message(message.from_user.id,f'{i}, {j}')
         if message.text == 'Добавить контакт':
             bot.send_message(message.from_user.id, 'Введите имя: ')
             bot.register_next_step_handler(message, dialog1)
@@ -84,7 +104,7 @@ def dialog3(message):
 def callback_worker(call):
     if call.data == 'yes':
         bot.send_message(call.message.chat.id, 'Отлично!')
-        AddCommand.add(name, surname, phonenumber)
+        AddCommand.add_bot(name, surname, phonenumber)
     elif call.data == 'no':
         bot.send_message(call.message.chat.id, 'Печалька')
         bot.send_message(call.message.chat.id, 'Введите /start для перезапуска бота')
