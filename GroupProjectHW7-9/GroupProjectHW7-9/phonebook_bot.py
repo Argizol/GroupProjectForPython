@@ -3,10 +3,10 @@ from telebot import types
 import ReadCommand
 import AddCommand
 import logger
-import DeleteCommand
+import DeleteCommand as Delete
 import EditCommand
 import ExitCommand
-import FindCommands
+import FindCommands as Find
 import ImportFile
 import ExportFile
 import re
@@ -18,6 +18,7 @@ from Contacts import data
 name = ''
 surname = ''
 phonenumber = 0
+filtered_list = []
 
 TOKEN = '5702651173:AAEhqZS4TNEXRaUV6dJeW9K4OnuN8KZ-iZs'
 
@@ -50,7 +51,41 @@ def bot_message(message):
             bot.send_message(message.from_user.id, 'Введите имя: ')
             bot.register_next_step_handler(message, get_name)
         if message.text == 'Найти контакт':
-            FindCommands.find_contact_bot()
+            bot.send_message(message.from_user.id, 'Кого хотим найти?')
+            bot.register_next_step_handler(message, find_contact_bot)
+        if message.text == 'Удалить контакт':  #почему-то не попадает список пользователей в filtered_list = []       
+            bot.send_message(message.from_user.id, 'Кого хотим найти?')            
+            bot.register_next_step_handler(message, find_contact_bot)
+            if len(filtered_list) > 1:
+                user_choice = int(input('Для выбора нужного контакта введите его порядковый номер: '))
+                user_for_commands = filtered_list[user_choice - 1].split(',')
+                print(filtered_list[user_choice - 1])
+            elif len(filtered_list) == 1:
+                user_for_commands = filtered_list[0].split(',')
+                Delete.delete_contact(user_for_commands[1])
+                bot.send_message(message.from_user.id, 'Удалено')
+            #else:
+            #    bot.send_message(message.from_user.id, 'Никого не нашли')
+
+            filtered_list.clear()
+
+def find_contact_bot(message):
+    global data 
+    global filtered_list
+    count = 0
+    for name, phone in data.items():
+        if (message.text in name) or (message.text in phone):
+            filtered_list.append(f'{name},{phone}')
+            count += 1
+            bot.send_message(message.from_user.id,f'{count}. {name}, {phone}')
+    return filtered_list
+
+
+    #keyboard = types.InlineKeyboardMarkup()
+    #for i in filtered_list:
+    #        count+=1
+    #        button = types.InlineKeyboardButton(text= f'{filtered_list[i]}', callback_data= str(count))
+    #        keyboard.add(button)
 
 
 def get_name(message):
@@ -90,14 +125,6 @@ def callback_worker(call):
         bot.send_message(call.message.chat.id, 'Печалька')
         bot.send_message(call.message.chat.id, 'Введите /start для перезапуска бота')
 
-
-def find_contact_bot(user_data):
-    global data
-    filtered_list = []
-    for name, phone in data.items():
-        if (user_data in name) or (user_data in phone):
-            filtered_list.append(f'{name},{phone}')
-    return filtered_list
 
 
 bot.polling(none_stop=True)

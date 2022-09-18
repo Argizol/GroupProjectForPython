@@ -22,8 +22,8 @@ def find_contact_bot():
     keyboard = types.InlineKeyboardMarkup()
     for i in filtered_list:
             count+=1
-            button = types.InlineKeyboardButton(text=filtered_list[i], callback_data= count)
-            keyboard.add(count)
+            button = types.InlineKeyboardButton(text= filtered_list[i], callback_data= count)
+            keyboard.add(button)
 
     #question = f'Фамилия и имя: {name} {surname}, телефон {str(phonenumber)}. Все верно?'
     #bot.send_message(message.from_user.id, text=question, reply_markup=keyboard)

@@ -10,7 +10,6 @@ def add(name, surname, phonenumber):
 def add_bot(name, surname, phonenumber):    
     global data
     data[f'{name} {surname}'] = phonenumber
-    #data.append(f'{name} {surname} {phonenumber}')
     Log.add_logger(f'{name} {surname} {phonenumber}')
 
 
