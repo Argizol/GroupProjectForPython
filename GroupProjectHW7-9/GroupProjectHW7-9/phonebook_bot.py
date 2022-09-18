@@ -17,6 +17,7 @@ name = ''
 surname = ''
 phonenumber = 0
 user_choice = 0
+filtered_list = []
 user_for_commands = []
 
 TOKEN = '5702651173:AAEhqZS4TNEXRaUV6dJeW9K4OnuN8KZ-iZs'
@@ -70,7 +71,7 @@ def bot_message(message):
 
 def delete(message):
     global data
-    filtered_list = []
+    global filtered_list
     count = 0
     if len(data) == 0:
         bot.send_message(message.from_user.id,f'Никого нет')
@@ -104,6 +105,7 @@ def get_userchoice(message, filtered_list):
 
 def find_contact_bot(message):
     global data 
+    global filtered_list
     count = 0
     if len(data) == 0:
         bot.send_message(message.from_user.id,f'Никого нет')
