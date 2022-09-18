@@ -2,7 +2,7 @@ import telebot
 from telebot import types
 import ReadCommand
 import AddCommand
-import logger
+import logger as Log
 import DeleteCommand as Delete
 import EditCommand
 import ExitCommand
@@ -53,25 +53,26 @@ def bot_message(message):
                 bot.send_message(message.from_user.id,f'{count}. {i} {j}')
         elif message.text == 'Добавить контакт':
             bot.send_message(message.from_user.id, 'Введите имя: ')
-            bot.register_next_step_handler(message, get_name)
+            bot.register_next_step_handler(message, get_name)            
         elif message.text == 'Найти контакт':
             bot.send_message(message.from_user.id, 'Кого хотим найти?')
-            bot.register_next_step_handler(message, find_contact_bot)
+            bot.register_next_step_handler(message, find_contact_bot)            
         elif message.text == 'Удалить контакт':  #почему-то не попадает список пользователей в filtered_list = []
             if len(filtered_list) == 0:
                 bot.send_message(message.from_user.id, 'Кого хотим найти?')            
-                bot.register_next_step_handler(message, find_contact_bot)
+                bot.register_next_step_handler(message, delete)
             #if len(filtered_list) > 1:
             #    user_choice = int(input('Для выбора нужного контакта введите его порядковый номер: '))
             #    user_for_commands = filtered_list[user_choice - 1].split(',')
             #    print(filtered_list[user_choice - 1])
             if len(filtered_list) == 1:
-                bot.register_next_step_handler(message, find_contact_bot)
                 user_for_commands = filtered_list[0].split(',')
                 Delete.delete_contact(user_for_commands[1])
+                filtered_list.clear()
                 bot.send_message(message.from_user.id, 'Удалено')
             #else:
             #    bot.send_message(message.from_user.id, 'Никого не нашли')
+
 
 def delete_contact(user_data):
     global data
@@ -79,12 +80,19 @@ def delete_contact(user_data):
         if phone == user_data:
             del data[name]
             Log.del_logger(f'{name} {phone}')
-
-
+def delete(message):
+    global data 
+    count = 0
+    if len(data) == 0:
+        bot.send_message(message.from_user.id,f'Никого нет')
+    for name, phone in data.copy().items():
+        if (message.text in name) or (message.text in phone):
+            del data[name]
+            Log.del_logger(f'{name} {phone}')
+            bot.send_message(message.from_user.id, f'Удален контакт: {name} {phone}')
 
 def find_contact_bot(message):
     global data 
-    global filtered_list
     count = 0
     if len(data) == 0:
         bot.send_message(message.from_user.id,f'Никого нет')
@@ -92,8 +100,8 @@ def find_contact_bot(message):
         if (message.text in name) or (message.text in phone):
             filtered_list.append(f'{name},{phone}')
             count += 1
-            bot.send_message(message.from_user.id,f'{count}. {filtered_list[0]}')
-    return filtered_list
+            bot.send_message(message.from_user.id,f'{count}. {filtered_list[0]}')            
+    
 
 
     #keyboard = types.InlineKeyboardMarkup()
