@@ -44,49 +44,30 @@ def start(message):
 def bot_message(message):
     if message.chat.type == 'private':
         if message.text == 'Вывести справочник на экран':
-            list1 = []
-            for i,j in data:
-               
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                bot.send_message(message.from_user.id,f'{i}, {j}')
+            for i,j in data.items():
+                bot.send_message(message.from_user.id,f'{i} {j}')
         if message.text == 'Добавить контакт':
             bot.send_message(message.from_user.id, 'Введите имя: ')
-            bot.register_next_step_handler(message, dialog1)
-        else:
-            bot.send_message(message.from_user.id, 'Проверьте ввод')
+            bot.register_next_step_handler(message, get_name)
+        if message.text == 'Найти контакт':
+            FindCommands.find_contact_bot()
 
 
-def dialog1(message):
+def get_name(message):
     global name
     name = message.text
     bot.send_message(message.from_user.id, 'Введите фамилию: ')
-    bot.register_next_step_handler(message, dialog2)
+    bot.register_next_step_handler(message, get_surname)
 
 
-def dialog2(message):
+def get_surname(message):
     global surname
     surname = message.text
     bot.send_message(message.from_user.id, 'Введите номер телефона: ')
-    bot.register_next_step_handler(message, dialog3)
+    bot.register_next_step_handler(message, get_phonenumber)
 
 
-def dialog3(message):
+def get_phonenumber(message):
     global phonenumber
     phonenumber = message.text
 
@@ -108,6 +89,15 @@ def callback_worker(call):
     elif call.data == 'no':
         bot.send_message(call.message.chat.id, 'Печалька')
         bot.send_message(call.message.chat.id, 'Введите /start для перезапуска бота')
+
+
+def find_contact_bot(user_data):
+    global data
+    filtered_list = []
+    for name, phone in data.items():
+        if (user_data in name) or (user_data in phone):
+            filtered_list.append(f'{name},{phone}')
+    return filtered_list
 
 
 bot.polling(none_stop=True)
