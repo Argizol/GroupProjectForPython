@@ -1,4 +1,3 @@
-from aifc import Error # нахера нам этот импорт?
 import logger as Log
 import AddCommand as Add
 import ReadCommand as Read
@@ -27,7 +26,7 @@ def menu():
                             '\n"Read" - чтобы вывести на экран весь справочник,'
                             '\n"Exit" - чтобы выйти из приложения.\n').capitalize()
             match command:
-                case 'Add':
+                case 'Add':                    
                     name = ''
                     surname = ''
                     phonenumber = ''
