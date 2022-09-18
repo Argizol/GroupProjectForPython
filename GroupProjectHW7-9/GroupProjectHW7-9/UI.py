@@ -1,4 +1,4 @@
-from aifc import Error
+from aifc import Error # нахера нам этот импорт?
 import logger as Log
 import AddCommand as Add
 import ReadCommand as Read
@@ -55,11 +55,11 @@ def menu():
                         user_for_commands = user_pool[user_choice - 1].split(',')
                         print(user_pool[user_choice - 1])
                         Del.delete_contact(user_for_commands[1])
-                        print(f'Запись абонента {user_for_commands[1]} удалена.')
+                        print(f'Запись абонента {user_for_commands[0]}, {user_for_commands[1]} удалена.')
                     elif len(user_pool) == 1:
                         user_for_commands = user_pool[0].split(',')
                         Del.delete_contact(user_for_commands[1])
-                        print(f'Запись абонента {user_for_commands[1]} удалена.')
+                        print(f'Запись абонента {user_for_commands[0]}, {user_for_commands[1]} удалена.')
                     else:
                         print('Пользователи не найдены.')
                 case 'Find':
