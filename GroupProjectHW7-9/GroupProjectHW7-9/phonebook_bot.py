@@ -5,7 +5,7 @@ import AddCommand
 import logger as Log
 import DeleteCommand as Delete
 import ImportFile as Import
-import ExportFile
+import ExportFile as Export
 import re
 from Contacts import data
 
@@ -18,6 +18,7 @@ surname = ''
 phonenumber = 0
 user_choice = 0
 user_for_commands = []
+
 TOKEN = '5702651173:AAEhqZS4TNEXRaUV6dJeW9K4OnuN8KZ-iZs'
 
 bot = telebot.TeleBot(TOKEN)
@@ -61,6 +62,11 @@ def bot_message(message):
         elif message.text == 'Импорт':
             Import.import_from_file()
             bot.send_message(message.from_user.id, f'Импортировано {len(data)} контактов')
+        elif message.text == 'Экспорт':
+            a = len(data)
+            Export.export_contacts(data)
+            bot.send_message(message.from_user.id, f'Контакты успешно экспортированы в файл')
+
 
 def delete(message):
     global data
