@@ -28,6 +28,7 @@
     <Compile Include="FindCommands.py" />
     <Compile Include="main.py" />
     <Compile Include="Logger.py" />
+    <Compile Include="phonebook_bot.py" />
     <Compile Include="ReadCommand.py" />
     <Compile Include="UI.py" />
     <Compile Include="ImportFile.py" />
