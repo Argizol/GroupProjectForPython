@@ -1,5 +1,4 @@
 from Contacts import data
-from Contacts import filtered_list
 import logger as Log
 
 

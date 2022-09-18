@@ -4,14 +4,11 @@ import ReadCommand
 import AddCommand
 import logger as Log
 import DeleteCommand as Delete
-import EditCommand
-import ExitCommand
-import FindCommands as Find
-import ImportFile
+import ImportFile as Import
 import ExportFile
 import re
 from Contacts import data
-from Contacts import filtered_list
+
 
 #name for your bot - phonebook_bot
 #username for your bot - python_phonebook_bot
@@ -61,9 +58,9 @@ def bot_message(message):
         elif message.text == 'Удалить контакт':
             bot.send_message(message.from_user.id, 'Кого хотим найти?')            
             bot.register_next_step_handler(message, delete)
-            #else:
-            #    bot.send_message(message.from_user.id, 'Никого не нашли')
-
+        elif message.text == 'Импорт':
+            Import.import_from_file()
+            bot.send_message(message.from_user.id, f'Импортировано {len(data)} контактов')
 
 def delete(message):
     global data
@@ -87,10 +84,7 @@ def delete(message):
         Delete.delete_contact(user_for_commands[1])
         bot.send_message(message.from_user.id, f'Удален контакт: {filtered_list[0]}')
         filtered_list.clear()
-        
-        #del data[name]
-        #bot.send_message(message.from_user.id, f'Удален контакт: {name} {phone}')
-        #Log.del_logger(f'{name} {phone}')
+
 
 def get_userchoice(message, filtered_list):
     global user_choice

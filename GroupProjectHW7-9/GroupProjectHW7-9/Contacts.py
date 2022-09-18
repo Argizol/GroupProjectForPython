@@ -1,5 +1,5 @@
 data = {}
-filtered_list = []
+
 
 
 
