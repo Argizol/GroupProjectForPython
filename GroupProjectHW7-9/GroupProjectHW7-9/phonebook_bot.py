@@ -19,7 +19,8 @@ from Contacts import filtered_list
 name = ''
 surname = ''
 phonenumber = 0
-
+user_choice = 0
+user_for_commands = []
 TOKEN = '5702651173:AAEhqZS4TNEXRaUV6dJeW9K4OnuN8KZ-iZs'
 
 bot = telebot.TeleBot(TOKEN)
@@ -57,38 +58,48 @@ def bot_message(message):
         elif message.text == 'Найти контакт':
             bot.send_message(message.from_user.id, 'Кого хотим найти?')
             bot.register_next_step_handler(message, find_contact_bot)            
-        elif message.text == 'Удалить контакт':  #почему-то не попадает список пользователей в filtered_list = []
-            if len(filtered_list) == 0:
-                bot.send_message(message.from_user.id, 'Кого хотим найти?')            
-                bot.register_next_step_handler(message, delete)
-            #if len(filtered_list) > 1:
-            #    user_choice = int(input('Для выбора нужного контакта введите его порядковый номер: '))
-            #    user_for_commands = filtered_list[user_choice - 1].split(',')
-            #    print(filtered_list[user_choice - 1])
-            if len(filtered_list) == 1:
-                user_for_commands = filtered_list[0].split(',')
-                Delete.delete_contact(user_for_commands[1])
-                filtered_list.clear()
-                bot.send_message(message.from_user.id, 'Удалено')
+        elif message.text == 'Удалить контакт':
+            bot.send_message(message.from_user.id, 'Кого хотим найти?')            
+            bot.register_next_step_handler(message, delete)
             #else:
             #    bot.send_message(message.from_user.id, 'Никого не нашли')
 
 
-def delete_contact(user_data):
-    global data
-    for name, phone in data.copy().items():
-        if phone == user_data:
-            del data[name]
-            Log.del_logger(f'{name} {phone}')
 def delete(message):
     global data
+    filtered_list = []
+    count = 0
     if len(data) == 0:
         bot.send_message(message.from_user.id,f'Никого нет')
     for name, phone in data.copy().items():
         if (message.text in name) or (message.text in phone):
-            del data[name]
-            Log.del_logger(f'{name} {phone}')
-            bot.send_message(message.from_user.id, f'Удален контакт: {name} {phone}')
+            filtered_list.append(f'{name},{phone}')
+            count += 1
+            bot.send_message(message.from_user.id,f'{count}. {name}, {phone}')
+
+    if len(filtered_list) > 1:
+        bot.send_message(message.from_user.id,f'Какой номер удаляем?')
+        bot.register_next_step_handler(message, get_userchoice, filtered_list)       
+        
+
+    if len(filtered_list) == 1:
+        user_for_commands = filtered_list[0].split(',')
+        Delete.delete_contact(user_for_commands[1])
+        bot.send_message(message.from_user.id, f'Удален контакт: {filtered_list[0]}')
+        filtered_list.clear()
+        
+        #del data[name]
+        #bot.send_message(message.from_user.id, f'Удален контакт: {name} {phone}')
+        #Log.del_logger(f'{name} {phone}')
+
+def get_userchoice(message, filtered_list):
+    global user_choice
+    global user_for_commands
+    user_choice = int(message.text)
+    user_for_commands = filtered_list[user_choice - 1].split(',')
+    Delete.delete_contact(user_for_commands[1])
+    bot.send_message(message.from_user.id, f'Удален контакт: {filtered_list[user_choice - 1]}')
+    filtered_list.clear()
 
 
 def find_contact_bot(message):
@@ -100,16 +111,9 @@ def find_contact_bot(message):
         if (message.text in name) or (message.text in phone):
             filtered_list.append(f'{name},{phone}')
             count += 1
-            bot.send_message(message.from_user.id,f'{count}. {filtered_list[0]}')            
+            bot.send_message(message.from_user.id,f'{count}. {filtered_list[0]}')
+            filtered_list.clear()
     
-
-
-    #keyboard = types.InlineKeyboardMarkup()
-    #for i in filtered_list:
-    #        count+=1
-    #        button = types.InlineKeyboardButton(text= f'{filtered_list[i]}', callback_data= str(count))
-    #        keyboard.add(button)
-
 
 def get_name(message):
     global name
