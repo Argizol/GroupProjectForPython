@@ -11,6 +11,7 @@ import ImportFile
 import ExportFile
 import re
 from Contacts import data
+from Contacts import filtered_list
 
 #name for your bot - phonebook_bot
 #username for your bot - python_phonebook_bot
@@ -18,7 +19,6 @@ from Contacts import data
 name = ''
 surname = ''
 phonenumber = 0
-filtered_list = []
 
 TOKEN = '5702651173:AAEhqZS4TNEXRaUV6dJeW9K4OnuN8KZ-iZs'
 
@@ -45,39 +45,54 @@ def start(message):
 def bot_message(message):
     if message.chat.type == 'private':
         if message.text == 'Вывести справочник на экран':
+            if len(data) == 0:
+                bot.send_message(message.from_user.id,f'Никого нет')
+            count = 0
             for i,j in data.items():
-                bot.send_message(message.from_user.id,f'{i} {j}')
-        if message.text == 'Добавить контакт':
+                count += 1
+                bot.send_message(message.from_user.id,f'{count}. {i} {j}')
+        elif message.text == 'Добавить контакт':
             bot.send_message(message.from_user.id, 'Введите имя: ')
             bot.register_next_step_handler(message, get_name)
-        if message.text == 'Найти контакт':
+        elif message.text == 'Найти контакт':
             bot.send_message(message.from_user.id, 'Кого хотим найти?')
             bot.register_next_step_handler(message, find_contact_bot)
-        if message.text == 'Удалить контакт':  #почему-то не попадает список пользователей в filtered_list = []       
-            bot.send_message(message.from_user.id, 'Кого хотим найти?')            
-            bot.register_next_step_handler(message, find_contact_bot)
-            if len(filtered_list) > 1:
-                user_choice = int(input('Для выбора нужного контакта введите его порядковый номер: '))
-                user_for_commands = filtered_list[user_choice - 1].split(',')
-                print(filtered_list[user_choice - 1])
-            elif len(filtered_list) == 1:
+        elif message.text == 'Удалить контакт':  #почему-то не попадает список пользователей в filtered_list = []
+            if len(filtered_list) == 0:
+                bot.send_message(message.from_user.id, 'Кого хотим найти?')            
+                bot.register_next_step_handler(message, find_contact_bot)
+            #if len(filtered_list) > 1:
+            #    user_choice = int(input('Для выбора нужного контакта введите его порядковый номер: '))
+            #    user_for_commands = filtered_list[user_choice - 1].split(',')
+            #    print(filtered_list[user_choice - 1])
+            if len(filtered_list) == 1:
+                bot.register_next_step_handler(message, find_contact_bot)
                 user_for_commands = filtered_list[0].split(',')
                 Delete.delete_contact(user_for_commands[1])
                 bot.send_message(message.from_user.id, 'Удалено')
             #else:
             #    bot.send_message(message.from_user.id, 'Никого не нашли')
 
-            filtered_list.clear()
+def delete_contact(user_data):
+    global data
+    for name, phone in data.copy().items():
+        if phone == user_data:
+            del data[name]
+            Log.del_logger(f'{name} {phone}')
+
+
 
 def find_contact_bot(message):
     global data 
     global filtered_list
     count = 0
+    if len(data) == 0:
+        bot.send_message(message.from_user.id,f'Никого нет')
     for name, phone in data.items():
         if (message.text in name) or (message.text in phone):
             filtered_list.append(f'{name},{phone}')
             count += 1
-            bot.send_message(message.from_user.id,f'{count}. {name}, {phone}')
+            bot.send_message(message.from_user.id,f'{count}. {filtered_list[0]}')
     return filtered_list
 
 
