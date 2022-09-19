@@ -92,8 +92,11 @@ def edit(message):
             filtered_list.append(f'{name},{phone}')
             count += 1
             bot.send_message(message.from_user.id,f'{count}. {filtered_list[count - 1]}')
-    bot.send_message(message.from_user.id, 'Кого будем редактировать?')
-    bot.register_next_step_handler(message, get_data_for_edit, filtered_list)
+    if len(filtered_list) == 1:
+        bot.register_next_step_handler(message, get_data_for_edit, filtered_list)
+    else:
+        bot.send_message(message.from_user.id, 'Кого будем редактировать?')
+        bot.register_next_step_handler(message, get_data_for_edit, filtered_list)
 
 
 def null_data(message):    
