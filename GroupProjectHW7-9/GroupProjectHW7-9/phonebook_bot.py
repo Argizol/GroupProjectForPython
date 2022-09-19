@@ -112,11 +112,16 @@ def get_data_for_edit(message, filtered_list):
 
 def get_new_data(message, user_for_commands):
     global new_data
+    global filtered_list
     new_data = message.text
     if re.compile("^[0-9\s()+-]*$").match(new_data):
         Edit.change_contact_number(user_for_commands[0], new_data)
+        bot.send_message(message.from_user.id, 'Данные успешно изменены')
+        filtered_list.clear()
     elif re.compile("^[a-zA-ZА-Яа-я\s]*$").match(new_data):
         Edit.change_contact_name(user_for_commands[0], new_data)
+        bot.send_message(message.from_user.id, 'Данные успешно изменены')
+        filtered_list.clear()
 
 def delete(message):
     global data
@@ -160,7 +165,7 @@ def find_contact_bot(message):
         if (message.text in name) or (message.text in phone):
             filtered_list.append(f'{name},{phone}')
             count += 1
-            bot.send_message(message.from_user.id,f'{count}. {filtered_list[0]}')
+            bot.send_message(message.from_user.id,f'{count}. {name}, {phone}')
             filtered_list.clear()
     
 
