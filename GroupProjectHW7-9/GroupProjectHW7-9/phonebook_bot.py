@@ -202,8 +202,7 @@ def callback_worker(call):
         bot.send_message(call.message.chat.id, 'Отлично!')
         AddCommand.add_bot(name, surname, phonenumber)
     elif call.data == 'no':
-        bot.send_message(call.message.chat.id, 'Упс, что-то пошло не так :-<\nВведите /start для перезапуска бота')
-        # bot.send_message(call.message.chat.id, 'Введите /start для перезапуска бота')
+        bot.send_message(call.message.chat.id, 'Упс, что-то пошло не так 😭\nВведите /start для перезапуска бота')
 
 
 bot.polling(none_stop=True)
