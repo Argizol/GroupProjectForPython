@@ -6,6 +6,7 @@ import logger as Log
 import DeleteCommand as Delete
 import ImportFile as Import
 import ExportFile as Export
+import EditCommand as Edit
 import re
 from Contacts import data
 
@@ -19,6 +20,7 @@ phonenumber = 0
 user_choice = 0
 filtered_list = []
 user_for_commands = []
+new_data = ''
 
 TOKEN = '5702651173:AAEhqZS4TNEXRaUV6dJeW9K4OnuN8KZ-iZs'
 
@@ -67,14 +69,60 @@ def bot_message(message):
             a = len(data)
             Export.export_contacts(data)
             bot.send_message(message.from_user.id, f'Контакты успешно экспортированы в файл')
+        elif message.text == 'Редактировать контакт':
+             bot.send_message(message.from_user.id, 'Введите данные для поиска контактов')
+             bot.register_next_step_handler(message, edit)
+            #new_data = input('Введите новое значение имени/телефона: ')
+            #if re.compile("^[0-9\s()+-]*$").match(new_data):
+            #    Edit.change_contact_number(user_for_commands[0], new_data)
+            #elif re.compile("^[a-zA-ZА-Яа-я\s]*$").match(new_data):
+            #    Edit.change_contact_name(user_for_commands[0], new_data)
+            #else:
+            #    print('Вы ввели некорректное значение')
+                          
+            
 
+def edit(message):
+    global data
+    global filtered_list
+    null_data(message)
+    count = 0
+    for name, phone in data.items():
+        if (message.text in name) or (message.text in phone):
+            filtered_list.append(f'{name},{phone}')
+            count += 1
+            bot.send_message(message.from_user.id,f'{count}. {filtered_list[count - 1]}')
+    bot.send_message(message.from_user.id, 'Кого будем редактировать?')
+    bot.register_next_step_handler(message, get_data_for_edit, filtered_list)
+
+
+def null_data(message):    
+    if len(data) == 0:
+        bot.send_message(message.from_user.id,f'Никого нет')
+
+
+def get_data_for_edit(message, filtered_list):
+    global user_choice
+    global user_for_commands
+    user_choice = int(message.text)
+    user_for_commands = filtered_list[user_choice - 1].split(',')
+    bot.send_message(message.from_user.id, 'Введите новое значение имени/телефона:')
+    bot.register_next_step_handler(message, get_new_data, user_for_commands)
+
+
+def get_new_data(message, user_for_commands):
+    global new_data
+    new_data = message.text
+    if re.compile("^[0-9\s()+-]*$").match(new_data):
+        Edit.change_contact_number(user_for_commands[0], new_data)
+    elif re.compile("^[a-zA-ZА-Яа-я\s]*$").match(new_data):
+        Edit.change_contact_name(user_for_commands[0], new_data)
 
 def delete(message):
     global data
     global filtered_list
     count = 0
-    if len(data) == 0:
-        bot.send_message(message.from_user.id,f'Никого нет')
+    null_data(message)
     for name, phone in data.copy().items():
         if (message.text in name) or (message.text in phone):
             filtered_list.append(f'{name},{phone}')
@@ -107,8 +155,7 @@ def find_contact_bot(message):
     global data 
     global filtered_list
     count = 0
-    if len(data) == 0:
-        bot.send_message(message.from_user.id,f'Никого нет')
+    null_data(message)
     for name, phone in data.items():
         if (message.text in name) or (message.text in phone):
             filtered_list.append(f'{name},{phone}')
